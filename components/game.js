@@ -11,12 +11,13 @@ import {
   View,
   Button
 } from 'react-native';
-import Game from './game';
+import Timer from './timer';
 
 export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Timer />
         <Text>Scharf</Text>
         <Button title="Hot">Hot</Button>
         <Button title="Difficult">Difficult</Button>
