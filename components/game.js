@@ -16,35 +16,47 @@ export default class Game extends Component {
     this.cardGenerator = CardGenerator();
 
     this.state = {
-      currentScore: 0,
+      score: {
+        right: 0,
+        wrong: 0
+      },
       currentCard: this.cardGenerator.next(),
-      wrongAnswers: 0
     };
 
     this.handleAnswer = this.handleAnswer.bind(this);
-
   }
 
-  handleAnswer (isCorrect) {
-      const newState = {
-        currentCard: this.cardGenerator.next()
-      };
+  handleAnswer(isCorrect) {
+    const score = [0,0];
 
-      if (isCorrect) {
-        newState['currentScore'] = this.state.currentScore + 1;
-      } else {
-        newState['wrongAnswers'] = this.state.wrongAnswers + 1;
-      }
+    const newScore = {
+      right: this.state.score.right,
+      wrong: this.state.score.wrong
+    };
 
-      setTimeout(() => {
-        this.setState(newState);
-      }, 300);
+    if (isCorrect) {
+      newScore.right++;
+    } else {
+      newScore.wrong++;
+    }
+
+    this.setState({
+      score: newScore
+    });
+
+    // The transition to the next card needs to have a delay so the user can see if their answer is correct.
+    setTimeout(() => {
+      this.setState({currentCard: this.cardGenerator.next()});
+    }, 300);
   }
 
   render() {
+    const stateScore = this.state.score;
+    const score = stateScore.right - stateScore.wrong;
+
     return (
       <View style={styles.container}>
-        <Score value={this.state.currentScore} />
+        <Score value={score} />
         <Timer />
         <Card card={this.state.currentCard} onAnswerSelected={this.handleAnswer} />
       </View>
