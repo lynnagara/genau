@@ -17,7 +17,8 @@ export default class Game extends Component {
 
     this.state = {
       currentScore: 0,
-      currentCard: this.cardGenerator.next()
+      currentCard: this.cardGenerator.next(),
+      wrongAnswers: 0
     };
 
     this.handleAnswer = this.handleAnswer.bind(this);
@@ -25,12 +26,19 @@ export default class Game extends Component {
   }
 
   handleAnswer (isCorrect) {
-    if (isCorrect) {
-      this.setState({
-        currentScore: this.state.currentScore + 1,
+      const newState = {
         currentCard: this.cardGenerator.next()
-      });
-    }
+      };
+
+      if (isCorrect) {
+        newState['currentScore'] = this.state.currentScore + 1;
+      } else {
+        newState['wrongAnswers'] = this.state.wrongAnswers + 1;
+      }
+
+      setTimeout(() => {
+        this.setState(newState);
+      }, 300);
   }
 
   render() {

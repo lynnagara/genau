@@ -10,7 +10,7 @@ export default class Card extends Component {
   constructor(props) {
     super(props);
 
-    const answers = this.getNext(this.props.card)
+    const answers = this.getNext(this.props.card);
 
     this.state = {
       answers,
