@@ -12,17 +12,24 @@ import Score from './score';
 export default class Game extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       currentScore: 0,
-      card: {
-        question: 'Scharf',
-        answers: ['Sharp', 'Difficult', 'Funny', 'Amusing'],
-        correctAnswerIndex: 0
-      }
+      cards: [
+        {
+          question: 'scharf',
+          answer: 'sharp',
+          wrongAnswers: ['difficult', 'funny', 'amusing']
+        },
+        {
+          question: 'weich',
+          answer: 'weak',
+          wrongAnswers: ['possible', 'same', 'later']
+        }
+      ]
     };
 
     this.handleAnswer = this.handleAnswer.bind(this);
+
   }
 
   handleAnswer (isCorrect) {
@@ -40,7 +47,7 @@ export default class Game extends Component {
       <View style={styles.container}>
         <Score value={this.state.currentScore} />
         <Timer />
-        <Card card={this.state.card} onAnswerSelected={this.handleAnswer} />
+        <Card card={this.state.cards[0]} onAnswerSelected={this.handleAnswer} />
       </View>
     );
   }
