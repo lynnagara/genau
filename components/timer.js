@@ -5,7 +5,6 @@ import {
   View,
   Button
 } from 'react-native';
-import Game from './game';
 
 export default class Timer extends Component {
   constructor(props) {
