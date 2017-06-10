@@ -10,7 +10,7 @@ import Game from './game';
 export default class Timer extends Component {
   constructor(props) {
     super(props);
-    const seconds = 4;
+    const seconds = 120;
     this.state = {seconds};
     this.int = setInterval(() => {
       if (this.state.seconds > 0) {
