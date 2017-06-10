@@ -27,8 +27,6 @@ export default class Game extends Component {
   }
 
   handleAnswer(isCorrect) {
-    const score = [0,0];
-
     const newScore = {
       right: this.state.score.right,
       wrong: this.state.score.wrong
@@ -40,8 +38,8 @@ export default class Game extends Component {
       newScore.wrong++;
     }
 
-    this.setState({
-      score: newScore
+   this.setState({
+     score: newScore
     });
 
     // The transition to the next card needs to have a delay so the user can see if their answer is correct.

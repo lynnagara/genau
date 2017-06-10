@@ -30,7 +30,16 @@ export default function CardGenerator () {
       const rand = Math.floor(Math.random() * available.length);
       const idx = available[rand];
       available.splice(rand, 1);
-      return cards[idx];
+
+      return Object.assign({allAnswers: getNext(cards[idx])}, cards[idx]) ;
     }
   }
 };
+
+function getNext(card) {
+  const len = card.wrongAnswers.length;
+  const insertPosition = Math.floor(Math.random() * (len + 1));
+  const answers = card.wrongAnswers.slice();
+  answers.splice(insertPosition, 0, card.answer);
+  return answers;
+}
