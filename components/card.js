@@ -10,11 +10,7 @@ export default class Card extends Component {
   constructor(props) {
     super(props);
 
-    const len = this.props.card.wrongAnswers.length;
-    const insertPosition = Math.floor(Math.random() * (len + 1));
-    const answers = this.props.card.wrongAnswers.slice();
-
-    answers.splice(insertPosition, 0, this.props.card.answer);
+    const answers = this.getNext(this.props.card)
 
     this.state = {
       answers,
@@ -43,7 +39,24 @@ export default class Card extends Component {
     return isCorrect ? 'correct' : 'incorrect';
   }
 
+  getNext(card) {
+    const len = card.wrongAnswers.length;
+    const insertPosition = Math.floor(Math.random() * (len + 1));
+    const answers = card.wrongAnswers.slice();
+    answers.splice(insertPosition, 0, card.answer);
+    return answers;
+  }
+
+  componentWillReceiveProps(next) {
+    this.setState({
+      answers: this.getNext(next.card)
+    });
+  }
+
+
+
   render() {
+
     const answersButtons = this.state.answers.map(value => {
       return (
         <AnswerButton

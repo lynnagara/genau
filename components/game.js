@@ -8,24 +8,16 @@ import {
 import Timer from './timer';
 import Card from './card';
 import Score from './score';
+import CardGenerator from '../CardGenerator';
 
 export default class Game extends Component {
   constructor(props) {
     super(props);
+    this.cardGenerator = CardGenerator();
+
     this.state = {
       currentScore: 0,
-      cards: [
-        {
-          question: 'scharf',
-          answer: 'sharp',
-          wrongAnswers: ['difficult', 'funny', 'amusing']
-        },
-        {
-          question: 'weich',
-          answer: 'weak',
-          wrongAnswers: ['possible', 'same', 'later']
-        }
-      ]
+      currentCard: this.cardGenerator.next()
     };
 
     this.handleAnswer = this.handleAnswer.bind(this);
@@ -33,11 +25,10 @@ export default class Game extends Component {
   }
 
   handleAnswer (isCorrect) {
-    console.log('get the next card', isCorrect);
-
     if (isCorrect) {
       this.setState({
-        currentScore: this.state.currentScore + 1
+        currentScore: this.state.currentScore + 1,
+        currentCard: this.cardGenerator.next()
       });
     }
   }
@@ -47,7 +38,7 @@ export default class Game extends Component {
       <View style={styles.container}>
         <Score value={this.state.currentScore} />
         <Timer />
-        <Card card={this.state.cards[0]} onAnswerSelected={this.handleAnswer} />
+        <Card card={this.state.currentCard} onAnswerSelected={this.handleAnswer} />
       </View>
     );
   }
